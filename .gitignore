@@ -1,0 +1,8 @@
+# documentation and code coverage
+#
+.yardoc
+/coverage
+/doc
+
+# test temps
+/test/temporary/*

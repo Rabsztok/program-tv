@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.push File.expand_path("../lib", File.dirname(__FILE__)) # add library to load path
+
+require 'program-tv'
+require 'optparse'
+
+options   = { layout: 'vertical', selector: 'img.sprite' }
+op        = OptionParser.new
+op.banner = <<-eos
+#{ProgramTV::DESCRIPTION}
+
+Usage: program-tv [options]
+
+eos
+
+op.on("-h", "--help") do
+  puts op.to_s
+  exit!
+end
+
+op.on("-v", "--version") do
+  puts ProgramTV::VERSION
+  exit!
+end
+
+begin
+  op.parse!(ARGV)
+  ARGV.clear
+  ProgramTV.run!
+rescue Exception => ex
+  puts ex.message
+  exit!
+end
