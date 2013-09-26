@@ -15,6 +15,10 @@ When gem is installed, just use program-tv command and pipe your output to desir
 
     $ program-tv > program.xml
 
+Or if you want to specify your own program list, use -c command to specify your own channel list, you can see channels.yml for example.
+
+    $ program-tv > program.xml -c /path/to/channel-list.yml
+
 Contact
 =======
 
