@@ -1,4 +1,4 @@
-program-tv [![Code Climate](https://codeclimate.com/github/Rabsztok/program-tv.png)](https://codeclimate.com/github/Rabsztok/program-tv) [![Dependency Status](https://gemnasium.com/Rabsztok/program-tv.png)](https://gemnasium.com/Rabsztok/program-tv) [![Gem Version](https://badge.fury.io/rb/program-tv.png)](http://badge.fury.io/rb/program-tv)
+program-tv [![Code Climate](https://codeclimate.com/repos/52446f19c7f3a33bfd000799/badges/c100ff88976f9fa85940/gpa.png)](https://codeclimate.com/repos/52446f19c7f3a33bfd000799/feed) [![Dependency Status](https://gemnasium.com/Rabsztok/program-tv.png)](https://gemnasium.com/Rabsztok/program-tv) [![Gem Version](https://badge.fury.io/rb/program-tv.png)](http://badge.fury.io/rb/program-tv)
 ===============
 
 Downloads TV channel schedule in XML format
