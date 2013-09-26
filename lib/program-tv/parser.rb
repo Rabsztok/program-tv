@@ -3,37 +3,30 @@ module ProgramTV
 
     def initialize
       @agent = Mechanize.new
-      @channel_list_url = "http://www.cyfrowypolsat.pl/program-tv/lista-kanalow/"
     end
 
     # Runs dynamic-sprites command.
     #
     def run
-      channel_urls.map do |url|
-        schedule(url)
+      ProgramTV.selected_channels.map do |url_name, epg_name|
+        schedule(epg_name, "http://www.cyfrowypolsat.pl/program-tv/#{url_name}")
       end
     end
 
     private
 
-    def schedule(url)
+    def schedule(epg_name, url)
       page = Nokogiri::HTML(@agent.get(url).body)
       data = page.css(".main.col > table:last > tbody > tr").map do |e|
         {
           start:   running_time(e),
-          channel: url.match(/([^\/]+)\/;/)[1].to_s,
+          channel: epg_name,
           title:   e.css('.name').text
         }
       end
       data[0..-2].each_with_index{ |element, i| element[:end] = data[i+1][:start] }
-      data.last[:end] = data.first[:start]
+      data.pop
       data
-    end
-
-    # Fetches page with channel list and returns Array of urls to subpages with channel schedule
-    def channel_urls
-      page = Nokogiri::HTML(@agent.get(@channel_list_url).body)
-      page.css('.rowChannel a').select{ |c| ProgramTV.selected_channels.include?(c.text.to_s.strip) }.map{ |c| c.attr('href') }
     end
 
     # Methods to retrieve channel attributes

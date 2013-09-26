@@ -2,7 +2,7 @@ module ProgramTV
 
   #----------------------------------------------------------------------------
 
-  VERSION     = "0.0.1"
+  VERSION     = "0.0.3"
   SUMMARY     = "TV Channel parser"
   DESCRIPTION = "Downloads TV channel list in XML format"
 
@@ -16,6 +16,7 @@ module ProgramTV
   # Initilizes Runner which controls all the magic stuff.
   #
   def self.run!(options = {})
+    @@options = options
     data = Parser.new.run
     puts Writer.new(data).run
   end
@@ -27,6 +28,6 @@ module ProgramTV
   end
 
   def self.selected_channels
-    @channels ||= YAML::load(File.open(File.join(gem_root, 'channels.yml')))
+    @channels ||= YAML::load(File.open(@@options[:channel_list] || File.join(gem_root, 'channels.yml')))
   end
 end

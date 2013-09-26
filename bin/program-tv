@@ -5,29 +5,33 @@ $LOAD_PATH.push File.expand_path("../lib", File.dirname(__FILE__)) # add library
 require 'program-tv'
 require 'optparse'
 
-options   = { layout: 'vertical', selector: 'img.sprite' }
-op        = OptionParser.new
-op.banner = <<-eos
-#{ProgramTV::DESCRIPTION}
+options   = {}
+OptionParser.new do |op|
+  op.banner = <<-eos
+  #{ProgramTV::DESCRIPTION}
 
-Usage: program-tv [options]
+  Usage: program-tv [options]
 
-eos
+  eos
 
-op.on("-h", "--help") do
-  puts op.to_s
-  exit!
-end
+  op.on("-h", "--help") do
+    puts op.to_s
+    exit!
+  end
 
-op.on("-v", "--version") do
-  puts ProgramTV::VERSION
-  exit!
-end
+  op.on("-v", "--version") do
+    puts ProgramTV::VERSION
+    exit!
+  end
+
+  op.on("-c", "--channel-list PATH", "path to yml channel list") do |path|
+    options[:channel_list] = path
+  end
+end.parse!
 
 begin
-  op.parse!(ARGV)
   ARGV.clear
-  ProgramTV.run!
+  ProgramTV.run!(options)
 rescue Exception => ex
   puts ex.message
   exit!

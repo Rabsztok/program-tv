@@ -4,5 +4,8 @@
 /coverage
 /doc
 
+# ignore gem builds
+/*.gem
+
 # test temps
 /test/temporary/*
