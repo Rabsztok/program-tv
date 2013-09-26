@@ -10,7 +10,7 @@ module ProgramTV
     def run
       ProgramTV.selected_channels.map do |url_name, epg_name|
         schedule(epg_name, "http://www.cyfrowypolsat.pl/program-tv/#{url_name}")
-      end
+      end.compact
     end
 
     private
@@ -23,6 +23,10 @@ module ProgramTV
           channel: epg_name,
           title:   e.css('.name').text
         }
+      end
+      if data.empty?
+        puts "Missing schedule for channel #{epg_name}"
+        return
       end
       data[0..-2].each_with_index{ |element, i| element[:end] = data[i+1][:start] }
       data.pop

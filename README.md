@@ -11,13 +11,13 @@ Installation
 Usage
 =====
 
-When gem is installed, just use program-tv command and pipe your output to desired file e.g.:
+When gem is installed, just use program-tv command e.g.:
 
-    $ program-tv > program.xml
+    $ program-tv
 
-Or if you want to specify your own program list, use -c command to specify your own channel list, you can see channels.yml for example.
+Or if you want to configure script, use -d command to specify directory with your epg files, and -c command to specify your own channel list, you can see channels.yml for example.
 
-    $ program-tv > program.xml -c /path/to/channel-list.yml
+    $ program-tv > program.xml -d /path/to/epg -c /path/to/channel-list.yml
 
 Contact
 =======

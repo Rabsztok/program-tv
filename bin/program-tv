@@ -5,7 +5,7 @@ $LOAD_PATH.push File.expand_path("../lib", File.dirname(__FILE__)) # add library
 require 'program-tv'
 require 'optparse'
 
-options   = {}
+options   = { :destination => '/home/hosting/tvo/epg/' }
 OptionParser.new do |op|
   op.banner = <<-eos
   #{ProgramTV::DESCRIPTION}
@@ -26,6 +26,10 @@ OptionParser.new do |op|
 
   op.on("-c", "--channel-list PATH", "path to yml channel list") do |path|
     options[:channel_list] = path
+  end
+
+  op.on("-d", "--destination PATH", "directory with EPG XML files") do |path|
+    options[:destination] = path
   end
 end.parse!
 

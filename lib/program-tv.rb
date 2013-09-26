@@ -2,7 +2,7 @@ module ProgramTV
 
   #----------------------------------------------------------------------------
 
-  VERSION     = "0.0.3"
+  VERSION     = "0.0.4"
   SUMMARY     = "TV Channel parser"
   DESCRIPTION = "Downloads TV channel list in XML format"
 
@@ -18,7 +18,7 @@ module ProgramTV
   def self.run!(options = {})
     @@options = options
     data = Parser.new.run
-    puts Writer.new(data).run
+    Writer.new(data, @@options[:destination]).run
   end
 
   private
