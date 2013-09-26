@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.description = "Downloads TV channel schedule in XML format"
   s.authors     = ["Maciej Walusiak"]
   s.email       = 'rabsztok@gmail.com'
-  s.files       = ["bin/program-tv", "lib/program-tv.rb", "lib/program-tv/parser.rb", "lib/program-tv/writer.rb", "channels.yml"]
+  s.files       = ["bin/program-tv", "lib/program-tv.rb", "lib/program-tv/parser.rb", "lib/program-tv/writer.rb", "lib/program-tv/hash_helper.rb", "channels.yml"]
   s.homepage    = 'https://github.com/Rabsztok/program-tv'
   s.license     = 'GPL'
   s.add_dependency "builder"
