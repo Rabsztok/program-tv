@@ -14,7 +14,10 @@ module ProgramTV
         today_schedule = []
         if File.exist?(xml_path(schedule))
           File.open(xml_path(schedule), "r+") do |file|
-            today_schedule = Hash.from_xml(file.read)[:tv][:programme]
+            today_schedule = Hash.from_xml(file.read)[:tv][:programme].map do |e|
+              e[:attributes][:title] = e[:title]
+              e[:attributes]
+            end
           end
         end
         File.open(xml_path(schedule), "w+") do |file|
@@ -26,7 +29,7 @@ module ProgramTV
     private
 
     def xml_path(schedule)
-      File.join(@destination, "#{schedule.first[:channel]}.xml")
+      File.join(@destination, "epg_#{schedule.first[:channel]}.xml")
     end
 
     # Builds XML data from schedule Hash
@@ -35,11 +38,9 @@ module ProgramTV
       xml_builder.instruct! :xml, :encoding => "UTF-8"
       xml_builder.tv do |tv|
         schedule.each do |program|
-          tv.programme do |p|
-            p.title   program[:title]
-            p.channel program[:channel]
-            p.start   program[:start]
-            p.end     program[:end]
+          tv.programme :channel => program[:channel], :start => program[:start], :stop => program[:stop] do |p|
+            p.title program[:title], :lang => 'pl'
+            p.desc  
           end
         end
       end
