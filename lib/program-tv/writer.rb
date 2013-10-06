@@ -14,14 +14,15 @@ module ProgramTV
         today_schedule = []
         if File.exist?(xml_path(schedule))
           File.open(xml_path(schedule), "r+") do |file|
-            today_schedule = Hash.from_xml(file.read)[:tv][:programme].map do |e|
-              e[:attributes][:title] = e[:title]
-              e[:attributes]
+            today_schedule = Hash.from_xml(file.read)[:tv][:programme].map do |p|
+              p[:attributes][:title] = p[:title]
+              p[:attributes]
             end
           end
         end
+        new_schedule = (today_schedule + schedule).select{ |p| p[:start] > Time.now.strftime("%Y%m%d000000 %z") } 
         File.open(xml_path(schedule), "w+") do |file|
-          file.write(build_xml(today_schedule + schedule))
+          file.write(build_xml(new_schedule))
         end
       end
     end
