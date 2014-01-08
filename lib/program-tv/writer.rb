@@ -20,7 +20,10 @@ module ProgramTV
             end
           end
         end
-        new_schedule = (today_schedule + schedule).select{ |p| p[:start] > Time.now.strftime("%Y%m%d000000 %z") } 
+        new_schedule = (today_schedule + schedule).
+            select{ |p| p[:start] > Time.now.strftime("%Y%m%d000000 %z") }.
+            uniq.
+            sort{ |a,b| a[:start] <=> b[:start] }
         File.open(xml_path(schedule), "w+") do |file|
           file.write(build_xml(new_schedule))
         end

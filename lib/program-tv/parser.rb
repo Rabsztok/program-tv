@@ -16,25 +16,28 @@ module ProgramTV
     private
 
     def schedule(epg_name, url)
-      @additional_day = false
       page = Nokogiri::HTML(@agent.get(url).body)
-      data = page.css(".main.col > table:last > tbody > tr").map do |e|
+      data = build_hash epg_name, page.css(".main.col > table:first > tbody > tr")
+      data += build_hash epg_name, page.css(".main.col > table:last > tbody > tr"), 1
+      puts "Missing schedule for channel #{epg_name}" and return if data.empty?
+    end
+
+    # convert nokogiri html data to handy hash structure
+    def build_hash(epg_name, data, offset = 0)
+      additional_day = false
+      data = data.map do |e|
         {
-          start:   running_time(e),
+          start:   running_time(e, offset),
           channel: epg_name,
           title:   e.css('.name').text
         }
       end
-      if data.empty?
-        puts "Missing schedule for channel #{epg_name}"
-        return
-      end
       data[0..-2].each_with_index do |element, i|
         element[:stop] = data[i+1][:start]
         if element[:stop] < element[:start]
-          @additional_day = true
+          additional_day = true
           element[:stop] += 86400
-        elsif @additional_day
+        elsif additional_day
           element[:start] += 86400
           element[:stop] += 86400
         end
@@ -42,16 +45,16 @@ module ProgramTV
         element[:stop] = element[:stop].strftime("%Y%m%d%H%M%S %z")
       end
       data.pop
-      data
+      return data
     end
 
     # Methods to retrieve channel attributes
-    def running_time(element)
+    def running_time(element, offset = 0)
       time = element.css('.time').text.match(/([0-9]+):([0-9]+)/)
       return nil unless time
       Time.new(Time.new.year,
                Time.new.month,
-               Time.new.day + 1,
+               Time.new.day + offset,
                time[1],
                time[2])
     end
