@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'program-tv'
-  s.version     = '0.0.8'
+  s.version     = '0.0.9'
   s.executables << 'program-tv'
   s.date        = '2013-09-24'
   s.summary     = "TV Channel parser"
