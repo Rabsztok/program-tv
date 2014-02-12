@@ -1,4 +1,5 @@
 require 'builder'
+require 'pry'
 require_relative 'hash_helper'
 
 module ProgramTV

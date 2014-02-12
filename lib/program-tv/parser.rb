@@ -19,7 +19,12 @@ module ProgramTV
       page = Nokogiri::HTML(@agent.get(url).body)
       data = build_hash epg_name, page.css(".main.col > table:first > tbody > tr")
       data += build_hash epg_name, page.css(".main.col > table:last > tbody > tr"), 1
-      puts "Missing schedule for channel #{epg_name}" and return if data.empty?
+      if data.empty?
+        puts "Missing schedule for channel #{epg_name}"
+        return nil
+      else
+        return data
+      end
     end
 
     # convert nokogiri html data to handy hash structure
