@@ -2,7 +2,7 @@ module ProgramTV
 
   #----------------------------------------------------------------------------
 
-  VERSION     = "0.0.4"
+  VERSION     = "0.1.0"
   SUMMARY     = "TV Channel parser"
   DESCRIPTION = "Downloads TV channel list in XML format"
 
